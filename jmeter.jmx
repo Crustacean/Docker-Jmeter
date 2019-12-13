@@ -1,0 +1,23 @@
+#!/bin/bash
+
+FreeMem=`awk '/MemFree/ { print int($2/1024) }' /proc/meminfo`
+s=$(($FreeMem/10*8))
+x=$(($FreeMem/10*8))
+n=$(($FreeMem/10*2))
+export JVM_ARGS="-Xmn${n}m -Xms${s}m -Xmx${x}m"
+#HEAP="-Xms512m -Xmx8192m"
+#export JVM_ARGS="-Xms512m -Xmx1024m"
+export timestamp=$(date +%Y%m%d_%H%M%S) && \
+#export volume_path=/ApigeeServicesSandbox.jmx && \
+export jmeter_path=/opt/apache-jmeter-5.2.1
+#jmeter \
+#-Djava.net.preferIPv6Addresses=true \
+ #-Djava.rmi.server.hostname=10.197.4.87 \
+$JMETER_BIN/jmeter \
+ -Djava.net.preferIPv6Addresses=true \
+ -n \
+ -Jthreads=20 \
+ -Jrampup=5 \
+ -t ${jmeter_path}/jmeter.jmx \
+ -l ${jmeter_path}/tmp/result_${timestamp}.jtl \
+ -j ${jmeter_path}/tmp/performance_${timestamp}.log

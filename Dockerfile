@@ -10,10 +10,10 @@ ENV TZ=Africa/Nairobi
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # ------------------------------------------
-# Defining proxy variables
+# Defining proxy variables if any
 # ------------------------------------------
-ENV http_proxy "http://172.29.213.98:8080"
-ENV https_proxy "https://172.29.213.98:8080"
+ENV http_proxy "http://0.0.0.0:8080"
+ENV https_proxy "https://0.0.0.0:8080"
 
 # ------------------------------------------
 # Defining environment variables
